@@ -25,7 +25,7 @@ resource "aws_iam_policy" "policy" {
 
 ## iam role
 
-resource "aws_iam_role" "test_role" {
+resource "aws_iam_role" "role" {
   name = "${var.component}-${var.env}-ec2-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -40,6 +40,16 @@ resource "aws_iam_role" "test_role" {
       },
     ]
   })
+}
+
+resource "aws_iam_instance_profile" "instance_profile" {
+  name = "${var.component}-${var.env}-ec2-role"
+  role = aws_iam_role.role.name
+}
+
+resource "aws_iam_role_policy_attachment" "policy-attach" {
+  role       = aws_iam_role.role.name
+  policy_arn = aws_iam_policy.policy.arn
 }
 
 
