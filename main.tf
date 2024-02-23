@@ -78,7 +78,7 @@ resource "aws_security_group" "sg" {
 
 
 resource "aws_instance" "instance" {
-  ami                    = data.aws_ami.ami.id
+  ami                    = "data.aws_ami.ami.id"
   instance_type          = "t3.small"
   vpc_security_group_ids = [aws_security_group.sg.id]
   iam_instance_profile = "aws_iam_instance_profile.instance_profile.name"
@@ -112,7 +112,7 @@ resource "null_resource" "ansible" {
 
     inline = [
       "sudo labauto ansible",
-      "sudo set-hostname ${var.component}"
+      "sudo set-hostname ${var.component}",
       "ansible-pull -i localhost, -U https://github.com/raghudevopsb73/roboshop-ansible main.yml -e env=${var.env} -e role_name=${var.component}"
     ]
   }
