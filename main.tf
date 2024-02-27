@@ -111,7 +111,6 @@ resource "null_resource" "ansible" {
 
     inline = [
       "sudo labauto ansible",
-      "sudo set-hostname ${var.component}",
       "ansible-pull -i localhost, -U https://github.com/srikanthmurthi/roboshop-ansible main.yml -e env=${var.env} -e role_name=${var.component}"
     ]
   }
